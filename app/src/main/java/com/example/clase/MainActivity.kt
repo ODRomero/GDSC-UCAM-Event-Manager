@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     }
     fun regBt(v : View){
-        val intent : Intent = Intent(this@MainActivity, activity_register::class.java)
+        val intent : Intent = Intent(this@MainActivity,    activity_home_BotNavBar::class.java)
         startActivity(intent)
     }
 
