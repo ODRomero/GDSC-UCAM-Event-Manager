@@ -23,7 +23,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintVertical_bias="1.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -33,16 +33,14 @@
                 android:id="@+id/btRegister2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:layout_marginBottom="32dp"
+                android:layout_marginTop="48dp"
                 android:onClick="registerBt"
                 android:text="Registrar"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.501"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etPassword"
-                app:layout_constraintVertical_bias="1.0" />
+                app:layout_constraintTop_toBottomOf="@+id/txtTelf"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/tvPass10"
@@ -50,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
                 android:fontFamily="sans-serif-thin"
-                android:text="Correo electronico:"
+                android:text="Registro de Usuarios"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -58,49 +56,49 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
-                android:id="@+id/etNombre"
+                android:id="@+id/txtNom"
                 android:layout_width="212dp"
                 android:layout_height="53dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="52dp"
                 android:ems="10"
                 android:hint="Jose Mota..."
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.494"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvNom" />
+                app:layout_constraintTop_toBottomOf="@+id/txtUsu" />
 
             <EditText
-                android:id="@+id/etPassword"
+                android:id="@+id/txtTelf"
+                android:layout_width="212dp"
+                android:layout_height="53dp"
+                android:layout_marginTop="48dp"
+                android:ems="10"
+                android:hint="968612132"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.494"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtPass" />
+
+            <EditText
+                android:id="@+id/txtPass"
                 android:layout_width="209dp"
                 android:layout_height="53dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="52dp"
                 android:ems="10"
                 android:hint="contraseña-segura..."
                 android:inputType="textPassword"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.507"
+                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPass12" />
-
-            <TextView
-                android:id="@+id/tvPass12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:fontFamily="sans-serif-thin"
-                android:text="Contraseña:"
-                android:textColor="#000000"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.501"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etNombre" />
+                app:layout_constraintTop_toBottomOf="@+id/txtNom" />
 
             <EditText
-                android:id="@+id/etCorreo"
+                android:id="@+id/txtUsu"
                 android:layout_width="210dp"
                 android:layout_height="54dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="20dp"
                 android:ems="10"
                 android:hint="correo@dominio..."
                 android:inputType="textPersonName"
@@ -108,18 +106,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvPass10" />
 
-            <TextView
-                android:id="@+id/tvNom"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:fontFamily="sans-serif-thin"
-                android:text="Nombre Completo:"
-                android:textColor="#000000"
-                android:textSize="24sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/etCorreo" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
