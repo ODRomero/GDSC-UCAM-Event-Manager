@@ -20,7 +20,7 @@
         app:layout_constraintVertical_bias="0.315" />
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/txtPass"
         android:layout_width="220dp"
         android:layout_height="66dp"
         android:ems="10"
@@ -31,7 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etCorreo"
+        app:layout_constraintTop_toBottomOf="@+id/txtUsu"
         app:layout_constraintVertical_bias="0.187" />
 
     <TextView
@@ -58,11 +58,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword"
+        app:layout_constraintTop_toBottomOf="@+id/txtPass"
         app:layout_constraintVertical_bias="0.239" />
 
     <EditText
-        android:id="@+id/etCorreo"
+        android:id="@+id/txtUsu"
         android:layout_width="220dp"
         android:layout_height="67dp"
         android:layout_marginTop="5dp"
@@ -87,7 +87,7 @@
         android:text="Contraseña:"
         android:textColor="#000000"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/etPassword"
+        app:layout_constraintBottom_toTopOf="@+id/txtPass"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.309"
         app:layout_constraintStart_toStartOf="parent" />
