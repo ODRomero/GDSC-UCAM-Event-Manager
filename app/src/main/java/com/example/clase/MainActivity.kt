@@ -33,16 +33,13 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("Range")
     fun loginBt(v : View){
         var pass=txtPass?.text.toString()
+        var us=txtUsu?.text.toString()
+
         var passAct:String?=""
         var cont:Int=0
 
         // Create or Instantiate the database
         val dataBaseHelper = DataBaseHelper(applicationContext)
-
-        //Para recibir parámetros
-        //var intent:Intent=intent
-        //var userRecibed=intent.getStringExtra("UserName")
-        //var passRecibed=intent.getStringExtra("UserPass")
 
         val db_writer = dataBaseHelper.writableDatabase
         val selectQuery = "SELECT  * FROM Usuario WHERE password = ?"
@@ -59,7 +56,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         if(cont>=1){
-            val home= Intent(this, activity_home_BotNavBar::class.java)
+            val home= Intent(this, activity_home_BotNavBar::class.java).apply{
+                putExtra("UserName", us)
+                putExtra("UserPass", pass)
+            }
             txtPass?.setText("")
             txtUsu?.setText("")
             startActivity(home)

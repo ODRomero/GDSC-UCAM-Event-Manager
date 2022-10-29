@@ -1,7 +1,9 @@
 package com.example.clase
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.clase.R
 import com.example.clase.databinding.ActivityHomeBotNavBarBinding
@@ -19,6 +21,7 @@ class activity_home_BotNavBar : AppCompatActivity() {
         setContentView(binding.root)
         replaceFragment(Inicio())
 
+
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.inicio -> replaceFragment(Inicio())
@@ -32,9 +35,16 @@ class activity_home_BotNavBar : AppCompatActivity() {
     }
 
     private fun replaceFragment(fragment : Fragment): Boolean {
+        var intent: Intent =intent
+        var userRecibed=intent.getStringExtra("UserName")
+        val bundle = Bundle()
+        bundle.putString("UserName", userRecibed)
+        fragment.arguments = bundle
+
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frameLayout, fragment)
+
         fragmentTransaction.commit()
         return true
     }

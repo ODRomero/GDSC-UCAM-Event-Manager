@@ -52,7 +52,7 @@
                 android:layout_marginTop="60dp"
                 android:layout_marginBottom="30dp"
                 android:backgroundTint="#81C784"
-                android:onClick="registerBt"
+                android:onClick="updateCambios"
                 android:text="Guardar Cambios"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
