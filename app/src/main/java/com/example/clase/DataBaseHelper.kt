@@ -1,6 +1,9 @@
 package com.example.clase
 
+import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import dataClasses.Evento
@@ -11,20 +14,56 @@ import dataClasses.Ubicacion
 class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
     companion object {
         // If you change the database schema, you must increment the database version.
-        const val DATABASE_VERSION = 1
+        const val DATABASE_VERSION = 2
         const val DATABASE_NAME = "MySQLDataBase"
     }
     override fun onCreate(db: SQLiteDatabase) {
-        val tablas = arrayOf("CREATE TABLE Usuario (UID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL, nombre TEXT NOT NULL, isadmin INTEGER NOT NULL DEFAULT 0, telefono TEXT NOT NULL)",
-            "CREATE TABLE Facilitador (FID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL, nombre TEXT NOT NULL, bio TEXT, foto BLOB)",
-            "CREATE TABLE Ubicacion (UBID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, direccion TEXT NOT NULL, aforo TEXT NOT NULL, nombre TEXT NOT NULL, foto BLOB)",
-            "CREATE TABLE Evento (EID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nombre TEXT NOT NULL, fecha TEXT NOT NULL, descripcion TEXT NOT NULL, foto BLOB, FID INTEGER, UBID INTEGER, FOREIGN KEY (FID) REFERENCES Facilitador (FID),  FOREIGN KEY (UBID) REFERENCES Ubicacion (UBID))",
-            "CREATE TABLE UserEvent (UEID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, FID INTEGER, UBID INTEGER, FOREIGN KEY (FID) REFERENCES Facilitador(FID),  FOREIGN KEY (UBID) REFERENCES Ubicacion(UBID))")
+        val tablas = arrayOf(
+            "CREATE TABLE Usuario (UID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, email TEXT NOT NULL, password TEXT NOT NULL, nombre TEXT NOT NULL, isadmin INTEGER NOT NULL DEFAULT 0, telefono TEXT NOT NULL)",
+            "CREATE TABLE Facilitador (FID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, email TEXT NOT NULL, nombre TEXT NOT NULL, bio TEXT, foto TEXT)",
+            "CREATE TABLE Ubicacion (UBID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, direccion TEXT NOT NULL, aforo TEXT NOT NULL, nombre TEXT NOT NULL, foto TEXT)",
+            "CREATE TABLE Evento (EID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, nombre TEXT NOT NULL, fecha TEXT NOT NULL, descripcion TEXT NOT NULL, foto TEXT, FID INTEGER, UBID INTEGER, FOREIGN KEY (FID) REFERENCES Facilitador (FID),  FOREIGN KEY (UBID) REFERENCES Ubicacion (UBID))",
+            "CREATE TABLE UserEvent (UEID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, EID INTEGER, UID INTEGER, FOREIGN KEY (EID) REFERENCES Evento(EID),  FOREIGN KEY (UID) REFERENCES Usuario(UID))"
+        )
 
         for (tabla in tablas){
             db.execSQL(tabla)
         }
-        db.close()
+
+        val valoresUbicacion = ContentValues()
+        val valoresFacilitador = ContentValues()
+        val valoresEvento = ContentValues()
+
+        var eventos = getEventos()
+        var idGen = 1
+        for(evento : Evento in eventos){
+
+            valoresUbicacion.put("nombre", evento.ubicacion.nombre)
+            valoresUbicacion.put("aforo", evento.ubicacion.aforo)
+            valoresUbicacion.put("direccion", evento.ubicacion.direccion)
+
+            valoresFacilitador.put("nombre", evento.facilitador.nombre)
+            valoresFacilitador.put("bio", evento.facilitador.bio)
+            valoresFacilitador.put("email", evento.facilitador.email)
+            valoresFacilitador.put("foto", evento.facilitador.foto)
+
+            valoresEvento.put("nombre", evento.nombre)
+            valoresEvento.put("fecha", evento.fecha)
+            valoresEvento.put("descripcion", evento.descripcion)
+            valoresEvento.put("foto", evento.foto)
+            valoresEvento.put("FID", idGen)
+            valoresEvento.put("UBID", idGen)
+
+            idGen += 1
+            db.insert("Facilitador", null, valoresFacilitador)
+            db.insert("Ubicacion", null, valoresUbicacion)
+            db.insert("Evento",null , valoresEvento)
+
+            valoresEvento.clear()
+            valoresFacilitador.clear()
+            valoresUbicacion.clear()
+        }
+
 
     }
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
@@ -39,6 +78,50 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
     }
     override fun onDowngrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         onUpgrade(db, oldVersion, newVersion)
+    }
+
+
+
+    @SuppressLint("Range")
+    fun getEventoDetalleTabla(): MutableList<Evento>? {
+        var eventos:MutableList<Evento> = ArrayList()
+        val db = this.readableDatabase
+        val cursor = db.rawQuery("SELECT Evento.nombre as Enombre, fecha, descripcion, Evento.foto as Efoto, Facilitador.nombre as Fnombre, email, bio, Facilitador.foto as Ffoto, Ubicacion.nombre as Unombre, aforo, direccion FROM Evento INNER JOIN Facilitador ON Evento.FID = Facilitador.FID INNER JOIN Ubicacion ON Evento.EID = Ubicacion.UBID", null)
+
+        if( cursor != null && cursor.moveToFirst() ) {
+            eventos.add(Evento(
+                cursor.getString(cursor.getColumnIndex("Enombre")),
+                cursor.getString(cursor.getColumnIndex("fecha")),
+                cursor.getString(cursor.getColumnIndex("descripcion")),
+                cursor.getString(cursor.getColumnIndex("Efoto")),
+                Ubicacion(
+                    cursor.getString(cursor.getColumnIndex("direccion")),
+                    cursor.getString(cursor.getColumnIndex("aforo")),
+                    cursor.getString(cursor.getColumnIndex("Unombre"))),
+                Facilitador(
+                    cursor.getString(cursor.getColumnIndex("Fnombre")),
+                    cursor.getString(cursor.getColumnIndex("bio")),
+                    cursor.getString(cursor.getColumnIndex("email")),
+                    cursor.getString(cursor.getColumnIndex("Ffoto")))))
+            while (cursor.moveToNext()) {
+                eventos.add(Evento(
+                    cursor.getString(cursor.getColumnIndex("Enombre")),
+                    cursor.getString(cursor.getColumnIndex("fecha")),
+                    cursor.getString(cursor.getColumnIndex("descripcion")),
+                    cursor.getString(cursor.getColumnIndex("Efoto")),
+                    Ubicacion(
+                        cursor.getString(cursor.getColumnIndex("direccion")),
+                        cursor.getString(cursor.getColumnIndex("aforo")),
+                        cursor.getString(cursor.getColumnIndex("Unombre"))),
+                    Facilitador(
+                        cursor.getString(cursor.getColumnIndex("Fnombre")),
+                        cursor.getString(cursor.getColumnIndex("bio")),
+                        cursor.getString(cursor.getColumnIndex("email")),
+                        cursor.getString(cursor.getColumnIndex("Ffoto")))))
+            }
+        }
+
+        return eventos
     }
 
     fun getEventos(): MutableList<Evento>{

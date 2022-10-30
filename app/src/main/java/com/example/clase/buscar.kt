@@ -47,8 +47,11 @@ class buscar : Fragment() {
 
         val view: View = inflater.inflate(R.layout.fragment_buscar, container, false)
 
+        val db = DataBaseHelper(view.context)
 
-        setUpRecyclerView( view.findViewById(R.id.rvEventos) )
+        var eventos:MutableList<Evento> = ArrayList(db.getEventoDetalleTabla() )
+
+        setUpRecyclerView( view.findViewById(R.id.rvEventos) ,eventos )
         // Inflate the layout for this fragment
         return view
     }
@@ -73,11 +76,12 @@ class buscar : Fragment() {
             }
     }
 
-    private fun setUpRecyclerView(rvEventos : RecyclerView){
+    private fun setUpRecyclerView(rvEventos: RecyclerView, eventos: MutableList<Evento>){
+
         mRecyclerView = rvEventos
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.layoutManager = LinearLayoutManager(view?.context)
-         mAdapter.RecyclerAdapter(getEventos(), requireContext())
+         mAdapter.RecyclerAdapter(eventos, requireContext())
         mRecyclerView.adapter = mAdapter
     }
 
