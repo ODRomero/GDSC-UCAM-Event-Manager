@@ -29,7 +29,7 @@ class buscar : Fragment() {
     private var param2: String? = null
 
     lateinit var mRecyclerView : RecyclerView
-    val mAdapter : RecyclerAdapter = RecyclerAdapter()
+    private val mAdapter : RecyclerAdapter = RecyclerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,10 +43,14 @@ class buscar : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
-    ): View? {
-        setUpRecyclerView( requireView().findViewById<RecyclerView>(R.id.rvEventos) )
+    ): View {
+
+        val view: View = inflater.inflate(R.layout.fragment_buscar, container, false)
+
+
+        setUpRecyclerView( view.findViewById(R.id.rvEventos) )
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_buscar, container, false)
+        return view
     }
 
     companion object {
@@ -69,10 +73,10 @@ class buscar : Fragment() {
             }
     }
 
-    fun setUpRecyclerView(rvEventos : RecyclerView){
+    private fun setUpRecyclerView(rvEventos : RecyclerView){
         mRecyclerView = rvEventos
         mRecyclerView.setHasFixedSize(true)
-        mRecyclerView.layoutManager = LinearLayoutManager(activity)
+        mRecyclerView.layoutManager = LinearLayoutManager(view?.context)
          mAdapter.RecyclerAdapter(getEventos(), requireContext())
         mRecyclerView.adapter = mAdapter
     }
