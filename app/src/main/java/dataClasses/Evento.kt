@@ -5,6 +5,6 @@ data class Evento(
     var fecha:String,
     var descripcion:String,
     var foto:String,
-    var ubicacion: Ubicacion,
-    var facilitador: Facilitador
+    var ubicacion: String,
+    var facilitador: String
 )

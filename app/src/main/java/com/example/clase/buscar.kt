@@ -1,6 +1,6 @@
 package com.example.clase
 
-import android.app.Activity
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dataClasses.Evento
-import dataClasses.Facilitador
-import dataClasses.Ubicacion
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -82,20 +80,41 @@ class buscar : Fragment() {
     }
 
     //TODO: sacar los eventos, facilitadores y ubicaciones de la BBDD en vez de tenerlos quemados
+    @SuppressLint("Range")
     fun getEventos(): MutableList<Evento>{
         var eventos:MutableList<Evento> = ArrayList()
-        //Ubicaciones
-        var ubicacionHiTech: Ubicacion = Ubicacion("Ctra. Nora Guadalupe, 3A, 30107 Murcia", "50 Personas", "UCAM HiTech")
-        var ubicacionUCAM: Ubicacion = Ubicacion("Av. de los Jerónimos, 135, 30107 Guadalupe de Maciascoque, Murcia", "28 Personas", "UCAM Pabellón 5 Sótano API 6")
-        var ubicacionOnline: Ubicacion = Ubicacion("Plataforma GDSC UCAM", "Ilimitado", "Online")
-        //Facilitadores
-        var facilitadorOscar: Facilitador = Facilitador("Oscar Romero", "Team Lead del GDSC UCAM", "oromero@gdsc_ucam.com", "https://res.cloudinary.com/startup-grind/image/upload/c_fill,dpr_2.0,f_auto,g_center,h_250,q_auto:good,w_250/v1/gcs/platform-data-dsc/events/IMG_20220129_120113_494.jpg")
-        var facilitadorJorge: Facilitador = Facilitador("Jorge Arcas", "Core Team Member del GDSC UCAM", "jarcas@gdsc_ucam.com", "https://res.cloudinary.com/startup-grind/image/upload/c_fill,dpr_2.0,f_auto,g_center,h_250,q_auto:good,w_250/v1/gcs/platform-data-dsc/events/ezgif.com-gif-maker_22hnFZ2.png")
-        var facilitadorJesus: Facilitador = Facilitador("Jesus Gonzalez", "Core Team Member del GDSC UCAM", "jgonzalez@gdsc_ucam.com", "https://res.cloudinary.com/startup-grind/image/upload/c_fill,dpr_2.0,f_auto,g_center,h_250,q_auto:good,w_250/v1/gcs/platform-data-dsc/events/ezgif.com-gif-maker%20%282%29.png")
-        //Eventos
-        eventos.add(Evento("Presentacion GDSC UCAM", "Oct 4, 2022", "Presentaremos al equipo que conforma al equipo del GDSC UCAM y los tipo de eventos que queremos realizar este año", "https://res.cloudinary.com/startup-grind/image/upload/c_fill,dpr_2.0,f_auto,g_xy_center,h_650,q_auto:good,w_1200,x_w_mul_0.5,y_h_mul_0.38/v1/gcs/platform-data-dsc/event_banners/Event%20Promo%20-%20Presentacion_lJi3o2J.png", ubicacionHiTech, facilitadorOscar))
-        eventos.add(Evento("Taller GitHub Basico", "Oct 11, 2022", "Introduccion al control de versiones e integraciones con VS Code", "https://res.cloudinary.com/startup-grind/image/upload/c_fill,dpr_2.0,f_auto,g_xy_center,h_650,q_auto:good,w_1200,x_w_mul_0.5,y_h_mul_0.55/v1/gcs/platform-data-dsc/event_banners/GitHub%20Basico%20Promo%20-%20Green.jpg", ubicacionUCAM, facilitadorJorge))
-        eventos.add(Evento("Taller Python Basico", "Oct 15, 2022", "Introduccion al lenguaje de progracion Python", "https://res.cloudinary.com/startup-grind/image/upload/c_fill,dpr_2.0,f_auto,g_xy_center,h_650,q_auto:good,w_1200,x_w_mul_0.5,y_h_mul_0.65/v1/gcs/platform-data-dsc/event_banners/promo%20taller%20basico%20de%20python.png",  ubicacionOnline, facilitadorJesus))
+
+        var nom: String = ""
+        var fech: String = ""
+        var foto: String = ""
+        var FID:String = ""
+        var UBID:String = ""
+        var descripcion:String = ""
+
+        // Create or Instantiate the database
+        val dataBaseHelper = DataBaseHelper(this.requireContext().applicationContext)
+        val db_reader = dataBaseHelper.readableDatabase
+        val cursor = db_reader.query(
+            "Evento",      // The table to query
+            null,           // The array of columns to return (pass null to get all)
+            null,           // The columns for the WHERE clause
+            null,           // The values for the WHERE clause
+            null,           // don't group the rows
+            null,           // don't filter by row groups
+            null // The sort order
+        )
+        with(cursor) {
+            while (moveToNext()) {
+                nom = getString(getColumnIndex("nombre"))
+                fech = getString(getColumnIndex("fecha"))
+                foto = getString(getColumnIndex("foto"))
+                FID = getString(getColumnIndex("FID"))
+                UBID = getString(getColumnIndex("UBID"))
+                descripcion=getString(getColumnIndex("descripcion"))
+                eventos.add(Evento(nom,fech,descripcion,foto,FID,UBID))
+            }
+        }
+        cursor.close()
         return eventos
     }
 }
