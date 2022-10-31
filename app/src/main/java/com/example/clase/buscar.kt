@@ -79,7 +79,7 @@ class buscar : Fragment() {
         mRecyclerView.adapter = mAdapter
     }
 
-    //TODO: sacar los eventos, facilitadores y ubicaciones de la BBDD en vez de tenerlos quemados
+
     @SuppressLint("Range")
     fun getEventos(): MutableList<Evento>{
         var eventos:MutableList<Evento> = ArrayList()
@@ -87,109 +87,27 @@ class buscar : Fragment() {
         var nom: String = ""
         var fech: String = ""
         var foto: String = ""
-        var FID:String = ""
-        var UBID:String = ""
+        var FNombre:String = ""
+        var UNombre:String = ""
         var descripcion:String = ""
 
         // Create or Instantiate the database
         val dataBaseHelper = DataBaseHelper(this.requireContext().applicationContext)
         val db_reader = dataBaseHelper.readableDatabase
-        val cursor = db_reader.query(
-            "Evento",      // The table to query
-            null,           // The array of columns to return (pass null to get all)
-            null,           // The columns for the WHERE clause
-            null,           // The values for the WHERE clause
-            null,           // don't group the rows
-            null,           // don't filter by row groups
-            null // The sort order
-        )
+        val cursor = db_reader.rawQuery("SELECT Evento.nombre as Enombre, fecha, descripcion, Evento.foto as Efoto, Facilitador.nombre as Fnombre, Ubicacion.nombre as Unombre FROM Evento INNER JOIN Facilitador ON Evento.FID = Facilitador.FID INNER JOIN Ubicacion ON Evento.EID = Ubicacion.UBID", null)
+
         with(cursor) {
             while (moveToNext()) {
-                nom = getString(getColumnIndex("nombre"))
+                nom = getString(getColumnIndex("Enombre"))
                 fech = getString(getColumnIndex("fecha"))
-                foto = getString(getColumnIndex("foto"))
-                FID = getString(getColumnIndex("FID"))
-                UBID = getString(getColumnIndex("UBID"))
+                foto = getString(getColumnIndex("Efoto"))
+                FNombre = getString(getColumnIndex("Fnombre"))
+                UNombre = getString(getColumnIndex("Unombre"))
                 descripcion=getString(getColumnIndex("descripcion"))
-                //val fal=getFacilitador(FID)
-                //val ub=getUbi(UBID)
-                eventos.add(Evento(nom,fech,descripcion,foto,UBID,FID))
+                eventos.add(Evento(nom,fech,descripcion,foto,UNombre, FNombre))
             }
         }
         cursor.close()
-
-        print(eventos.get(0).foto)
-
         return eventos
     }
-    /*@SuppressLint("Range")
-    fun getFacilitador(string :String) : Facilitador{
-        var facilitador: Facilitador=Facilitador("","","","")
-        val FID=arrayOf("FID")
-        val id=arrayOf(string)
-        var nombre:String=""
-        var foto2:String=""
-        var email:String=""
-        var bio:String=""
-
-        // Create or Instantiate the database
-        val dataBaseHelper = DataBaseHelper(this.requireContext().applicationContext)
-        val db_reader = dataBaseHelper.readableDatabase
-        val cursor = db_reader.query(
-            "Facilitador",      // The table to query
-            null,           // The array of columns to return (pass null to get all)
-            FID.toString(),           // The columns for the WHERE clause
-            id,           // The values for the WHERE clause
-            null,           // don't group the rows
-            null,           // don't filter by row groups
-            null // The sort order
-        )
-        with(cursor) {
-            while (moveToNext()) {
-                nombre= getString(getColumnIndex("nombre"))
-                foto2 = getString(getColumnIndex("foto"))
-                email=getString(getColumnIndex("email"))
-                bio=getString(getColumnIndex("descripcion"))
-                facilitador = Facilitador(email ,bio ,nombre ,foto2)
-            }
-        }
-        cursor.close()
-        return facilitador
-
-    }*/
-   /* @SuppressLint("Range")
-    fun getUbi(string :String) : Ubicacion{
-        var ubi: Ubicacion=Ubicacion("","","")
-        val FID=arrayOf("UBID")
-        val id=arrayOf(string)
-        var nombre:String=""
-        var dir:String=""
-        var aforo:String=""
-
-
-        // Create or Instantiate the database
-        val dataBaseHelper = DataBaseHelper(this.requireContext().applicationContext)
-        val db_reader = dataBaseHelper.readableDatabase
-        val cursor = db_reader.query(
-            "Ubicacion",      // The table to query
-            null,           // The array of columns to return (pass null to get all)
-            FID.toString(),           // The columns for the WHERE clause
-            id,           // The values for the WHERE clause
-            null,           // don't group the rows
-            null,           // don't filter by row groups
-            null // The sort order
-        )
-        with(cursor) {
-            while (moveToNext()) {
-                nombre = getString(getColumnIndex("nombre"))
-                dir = getString(getColumnIndex("direccion"))
-                aforo=getString(getColumnIndex("aforo"))
-
-                ubi = Ubicacion(dir, aforo, nombre)
-            }
-        }
-        cursor.close()
-        return ubi
-
-    }*/
 }
