@@ -2,12 +2,11 @@ package com.example.clase
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
     var txtUsu: EditText?=null
@@ -34,40 +33,47 @@ class MainActivity : AppCompatActivity() {
     fun loginBt(v : View){
         var pass=txtPass?.text.toString()
         var us=txtUsu?.text.toString()
-
+        var parametros = arrayOf(pass, us)
         var passAct:String?=""
+        var usAct:String?=""
         var cont:Int=0
 
         // Create or Instantiate the database
-        val dataBaseHelper = DataBaseHelper(applicationContext)
+        if(pass!="" && us!="") {
+            val dataBaseHelper = DataBaseHelper(applicationContext)
+            val db_reader = dataBaseHelper.readableDatabase
+            val cursor =
+                db_reader.rawQuery("SELECT * FROM Usuario WHERE password=?"+"and email=?",
+                    parametros)
 
-        val db_writer = dataBaseHelper.writableDatabase
-        val selectQuery = "SELECT  * FROM Usuario WHERE password = ?"
+            with(cursor) {
+                while (moveToNext()) {
 
+                        passAct = getString(getColumnIndex("password"))
+                        usAct = getString(getColumnIndex("email"))
+                        cont++
 
-        db_writer.rawQuery(selectQuery, arrayOf(pass)).use { // .use requires API 16
-            if (it.moveToFirst()) {
-
-                passAct=it.getString(it.getColumnIndex("password"))
-                cont++
-
+                }
             }
-
-        }
-
-        if(cont>=1){
-            val home= Intent(this, activity_home_BotNavBar::class.java).apply{
-                putExtra("UserName", us)
-                putExtra("UserPass", pass)
+            cursor.close()
+            if (cont >= 1) {
+                val home = Intent(this, activity_home_BotNavBar::class.java).apply {
+                    putExtra("UserName", us)
+                    putExtra("UserPass", pass)
+                }
+                txtPass?.setText("")
+                txtUsu?.setText("")
+                startActivity(home)
+            } else {
+                Toast.makeText(this, "El usuario se debe loguear", Toast.LENGTH_LONG).show()
             }
-            txtPass?.setText("")
-            txtUsu?.setText("")
-            startActivity(home)
         }else{
-            Toast.makeText(this,"El usuario se debe loguear", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "El usuario ha dejado alguno de los campos vacios", Toast.LENGTH_LONG).show()
         }
         txtPass?.setText("")
         txtUsu?.setText("")
     }
 
 }
+
+
