@@ -1,10 +1,12 @@
 package com.example.clase
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -20,21 +22,55 @@ class Ajustes : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+/*
+    lateinit var mRecyclerView : RecyclerView
+    private val mAdapter : RecyclerAdapter = RecyclerAdapter()
+    var sw:Switch? =null
+*/
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        //sw= requireView().findViewById(R.id.switchTema)
+
     }
 
+
+    @SuppressLint("UseSwitchCompatOrMaterialCode")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ajustes, container, false)
+       /* val ma = activity as activity_home_BotNavBar?
+        //val sp: SharedPreferences = ma?.getSharedPreferences("SP", Context.MODE_PRIVATE)!!
+        //val editor: SharedPreferences.Editor = sp.edit()
+        //val theme = sp.getInt("Theme", 1)
+        var editor:Int?
+        /*if (theme == 1) {
+            sw.setChecked(false)
+        } else {
+            sw.setChecked(true)
+        }*/
+        sw?.setOnClickListener(){
+            if(sw!!.isChecked){
+                //editor.putInt("Theme", 0)
+                editor=0
+            }else{
+                editor=1
+                //editor.putInt("Theme", 1)
+            }
+            //editor.commit()
+            ma?.setDayNight(editor)
+        }*/
+        val view: View = inflater.inflate(R.layout.fragment_ajustes, container, false)
+
+
+        //setUpRecyclerView( view.findViewById(R.id.rv) )
+
+
+        return view
     }
 
     companion object {
@@ -56,4 +92,6 @@ class Ajustes : Fragment() {
                 }
             }
     }
+
+
 }

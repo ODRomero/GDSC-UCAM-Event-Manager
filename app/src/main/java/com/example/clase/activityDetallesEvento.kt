@@ -84,9 +84,6 @@ class activityDetallesEvento : AppCompatActivity() {
 
             }
         }
-
-
-
         db_reader.close()
 
     }

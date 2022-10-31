@@ -4,15 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purple_200"
-    tools:context=".Ajustes">
+    tools:context=".Ajustes"
+    android:id="@+id/frameLayout3">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ajustes Fragment"
-        android:textSize="26dp"
-        android:layout_gravity="center"
-        />
+
+    <Switch
+        android:id="@+id/switchTema"
+        android:layout_width="match_parent"
+        android:layout_height="224dp"
+        android:text="Switch"
+        tools:layout_conversion_absoluteHeight="136dp"
+        tools:layout_conversion_absoluteWidth="214dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
 </FrameLayout>
