@@ -43,7 +43,7 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
         fun bind(evento:Evento, context: Context){
             nombreEvento.text = evento.nombre
-            //ubicacionEvento.text = evento.ubicacion.UBID
+            //ubicacionEvento.text = evento.ubicacion
             fechaEvento.text = evento.fecha
             itemView.setOnClickListener(View.OnClickListener { Toast.makeText(context, evento.nombre, Toast.LENGTH_SHORT).show() })
             imageEvento.loadUrl(evento.foto)

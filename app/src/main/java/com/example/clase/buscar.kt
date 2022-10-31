@@ -111,10 +111,85 @@ class buscar : Fragment() {
                 FID = getString(getColumnIndex("FID"))
                 UBID = getString(getColumnIndex("UBID"))
                 descripcion=getString(getColumnIndex("descripcion"))
-                eventos.add(Evento(nom,fech,descripcion,foto,FID,UBID))
+                //val fal=getFacilitador(FID)
+                //val ub=getUbi(UBID)
+                eventos.add(Evento(nom,fech,descripcion,foto,UBID,FID))
             }
         }
         cursor.close()
+
+        print(eventos.get(0).foto)
+
         return eventos
     }
+    /*@SuppressLint("Range")
+    fun getFacilitador(string :String) : Facilitador{
+        var facilitador: Facilitador=Facilitador("","","","")
+        val FID=arrayOf("FID")
+        val id=arrayOf(string)
+        var nombre:String=""
+        var foto2:String=""
+        var email:String=""
+        var bio:String=""
+
+        // Create or Instantiate the database
+        val dataBaseHelper = DataBaseHelper(this.requireContext().applicationContext)
+        val db_reader = dataBaseHelper.readableDatabase
+        val cursor = db_reader.query(
+            "Facilitador",      // The table to query
+            null,           // The array of columns to return (pass null to get all)
+            FID.toString(),           // The columns for the WHERE clause
+            id,           // The values for the WHERE clause
+            null,           // don't group the rows
+            null,           // don't filter by row groups
+            null // The sort order
+        )
+        with(cursor) {
+            while (moveToNext()) {
+                nombre= getString(getColumnIndex("nombre"))
+                foto2 = getString(getColumnIndex("foto"))
+                email=getString(getColumnIndex("email"))
+                bio=getString(getColumnIndex("descripcion"))
+                facilitador = Facilitador(email ,bio ,nombre ,foto2)
+            }
+        }
+        cursor.close()
+        return facilitador
+
+    }*/
+   /* @SuppressLint("Range")
+    fun getUbi(string :String) : Ubicacion{
+        var ubi: Ubicacion=Ubicacion("","","")
+        val FID=arrayOf("UBID")
+        val id=arrayOf(string)
+        var nombre:String=""
+        var dir:String=""
+        var aforo:String=""
+
+
+        // Create or Instantiate the database
+        val dataBaseHelper = DataBaseHelper(this.requireContext().applicationContext)
+        val db_reader = dataBaseHelper.readableDatabase
+        val cursor = db_reader.query(
+            "Ubicacion",      // The table to query
+            null,           // The array of columns to return (pass null to get all)
+            FID.toString(),           // The columns for the WHERE clause
+            id,           // The values for the WHERE clause
+            null,           // don't group the rows
+            null,           // don't filter by row groups
+            null // The sort order
+        )
+        with(cursor) {
+            while (moveToNext()) {
+                nombre = getString(getColumnIndex("nombre"))
+                dir = getString(getColumnIndex("direccion"))
+                aforo=getString(getColumnIndex("aforo"))
+
+                ubi = Ubicacion(dir, aforo, nombre)
+            }
+        }
+        cursor.close()
+        return ubi
+
+    }*/
 }

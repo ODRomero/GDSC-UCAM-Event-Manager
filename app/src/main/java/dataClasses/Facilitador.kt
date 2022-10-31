@@ -5,4 +5,7 @@ data class Facilitador(
     var bio:String,
     var email:String,
     var foto:String
-)
+){
+
+
+}
