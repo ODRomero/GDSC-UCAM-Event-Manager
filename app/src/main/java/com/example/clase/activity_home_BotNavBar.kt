@@ -3,12 +3,8 @@ package com.example.clase
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.clase.R
 import com.example.clase.databinding.ActivityHomeBotNavBarBinding
-import com.example.clase.databinding.ActivityMainBinding
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class activity_home_BotNavBar : AppCompatActivity() {
@@ -21,13 +17,14 @@ class activity_home_BotNavBar : AppCompatActivity() {
         setContentView(binding.root)
         replaceFragment(Inicio())
 
+        var userEmail = intent.getStringExtra("UserName").toString()
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.inicio -> replaceFragment(Inicio())
                 R.id.buscar -> replaceFragment(buscar())
                 R.id.ajustes -> replaceFragment(Ajustes())
-                R.id.eventos -> replaceFragment(Eventos())
+                R.id.eventos -> replaceFragment(Eventos(userEmail))
                 R.id.perfil -> replaceFragment(Perfil())
                 else -> {false}
             }

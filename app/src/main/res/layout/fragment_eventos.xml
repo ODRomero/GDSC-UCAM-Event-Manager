@@ -5,6 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".Eventos">
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMisEventos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:listitem="@layout/item_evento"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:visibility="visible"
+        ></androidx.recyclerview.widget.RecyclerView>
 
 </FrameLayout>
