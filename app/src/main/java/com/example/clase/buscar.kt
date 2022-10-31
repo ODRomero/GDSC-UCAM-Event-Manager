@@ -1,6 +1,7 @@
 package com.example.clase
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -83,7 +84,7 @@ class buscar : Fragment() {
     @SuppressLint("Range")
     fun getEventos(): MutableList<Evento>{
         var eventos:MutableList<Evento> = ArrayList()
-
+        var EID: String = ""
         var nom: String = ""
         var fech: String = ""
         var foto: String = ""
@@ -94,17 +95,18 @@ class buscar : Fragment() {
         // Create or Instantiate the database
         val dataBaseHelper = DataBaseHelper(this.requireContext().applicationContext)
         val db_reader = dataBaseHelper.readableDatabase
-        val cursor = db_reader.rawQuery("SELECT Evento.nombre as Enombre, fecha, descripcion, Evento.foto as Efoto, Facilitador.nombre as Fnombre, Ubicacion.nombre as Unombre FROM Evento INNER JOIN Facilitador ON Evento.FID = Facilitador.FID INNER JOIN Ubicacion ON Evento.EID = Ubicacion.UBID", null)
+        val cursor = db_reader.rawQuery("SELECT EID, Evento.nombre as Enombre, fecha, descripcion, Evento.foto as Efoto, Facilitador.nombre as Fnombre, Ubicacion.nombre as Unombre FROM Evento INNER JOIN Facilitador ON Evento.FID = Facilitador.FID INNER JOIN Ubicacion ON Evento.EID = Ubicacion.UBID", null)
 
         with(cursor) {
             while (moveToNext()) {
+                EID = getString(getColumnIndex("EID"))
                 nom = getString(getColumnIndex("Enombre"))
                 fech = getString(getColumnIndex("fecha"))
                 foto = getString(getColumnIndex("Efoto"))
                 FNombre = getString(getColumnIndex("Fnombre"))
                 UNombre = getString(getColumnIndex("Unombre"))
                 descripcion=getString(getColumnIndex("descripcion"))
-                eventos.add(Evento(nom,fech,descripcion,foto,UNombre, FNombre))
+                eventos.add(Evento(EID.toInt(),nom,fech,descripcion,foto,UNombre, FNombre))
             }
         }
         cursor.close()

@@ -1,12 +1,15 @@
 package com.example.clase
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import dataClasses.Evento
@@ -40,12 +43,21 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
         val ubicacionEvento = view.findViewById(R.id.tvUbicacionEvento) as TextView
         val fechaEvento = view.findViewById(R.id.tvFechaEvento) as TextView
         val imageEvento = view.findViewById(R.id.ivImagenEvento) as ImageView
+        val btDetallesEvento = view.findViewById(R.id.btMasInfo) as Button
+
 
         fun bind(evento:Evento, context: Context){
             nombreEvento.text = evento.nombre
             ubicacionEvento.text = evento.ubicacion
             fechaEvento.text = evento.fecha
             itemView.setOnClickListener(View.OnClickListener { Toast.makeText(context, evento.nombre, Toast.LENGTH_SHORT).show() })
+            btDetallesEvento.setOnClickListener(){
+                val detallesEvento = Intent(context, activityDetallesEvento::class.java).apply {
+                    putExtra("EID",evento.EID)
+                }
+
+                startActivity(context,detallesEvento,null)
+            }
             imageEvento.loadUrl(evento.foto)
         }
         fun ImageView.loadUrl(url: String) {
