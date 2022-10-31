@@ -56,10 +56,9 @@ class activityDetallesEvento : AppCompatActivity() {
         var tvFacilitador:String?=""
         var tvBioFacilitador:String?=""
         var tvNombreFacilitador:String?=""
-
+        //TODO mostrar el nombre del evento, aparentemente no carga correctamente
         val dataBaseHelper = DataBaseHelper(applicationContext)
         val db_reader = dataBaseHelper.readableDatabase
-        //TODO llamar a la bbdd y llenar las vistas con la informacion
         val cursor = db_reader.rawQuery("SELECT Evento.nombre as Enombre, fecha, descripcion, Evento.foto as Efoto, Facilitador.nombre as Fnombre, email, " +
                 "bio, Facilitador.foto as Ffoto, Ubicacion.nombre as Unombre, aforo, " +
                 "direccion FROM Evento INNER JOIN Facilitador ON Evento.FID = Facilitador.FID INNER JOIN Ubicacion ON Evento.EID = Ubicacion.UBID where Evento.EID=?", eid)
