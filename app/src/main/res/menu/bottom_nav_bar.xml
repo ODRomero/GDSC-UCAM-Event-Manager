@@ -5,10 +5,10 @@
         android:id="@+id/inicio"
         android:icon="@drawable/ic_baseline_home_24"
         />
-    <item android:title="Eventos"
+    <item android:title="Mis Eventos"
         android:id="@+id/eventos"
         android:icon="@drawable/ic_baseline_event_seat_24"/>
-    <item android:title="Buscar"
+    <item android:title="Eventos"
         android:id="@+id/buscar"
         android:icon="@drawable/ic_baseline_search_24"/>
     <item android:title="Perfil"

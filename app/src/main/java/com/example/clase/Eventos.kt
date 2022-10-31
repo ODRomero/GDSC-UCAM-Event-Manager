@@ -90,7 +90,7 @@ class Eventos(userEmail: String) : Fragment() {
         var UNombre:String = ""
         var descripcion:String = ""
 
-        println(userEmail)
+
 
         val dataBaseHelper = DataBaseHelper(this.requireContext().applicationContext)
         val db_reader = dataBaseHelper.readableDatabase
