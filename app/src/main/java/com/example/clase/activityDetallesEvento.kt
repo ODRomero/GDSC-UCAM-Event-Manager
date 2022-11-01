@@ -25,7 +25,7 @@ class activityDetallesEvento : AppCompatActivity() {
         setContentView(R.layout.activity_detalles_evento)
 
         ivImagenEventoDetalle2 = findViewById(R.id.ivImagenEventoDetalle)
-        tvNombreEventoDetalle2 = findViewById(R.id.tvNombreEvento)
+        tvNombreEventoDetalle2 = findViewById(R.id.tvNombreEventoDetalle)
         tvDescripcionEventoDetalle2 = findViewById(R.id.tvDescripcionEventoDetalle)
         tvUbicacionEventoDetalle2 = findViewById(R.id.tvUbicacionEventoDetalle)
         tvFechaEventoDetalle2 = findViewById(R.id.tvFechaEventoDetalle)
