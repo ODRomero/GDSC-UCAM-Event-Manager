@@ -95,7 +95,7 @@ class buscar : Fragment() {
         // Create or Instantiate the database
         val dataBaseHelper = DataBaseHelper(this.requireContext().applicationContext)
         val db_reader = dataBaseHelper.readableDatabase
-        val cursor = db_reader.rawQuery("SELECT EID, Evento.nombre as Enombre, fecha, descripcion, Evento.foto as Efoto, Facilitador.nombre as Fnombre, Ubicacion.nombre as Unombre FROM Evento INNER JOIN Facilitador ON Evento.FID = Facilitador.FID INNER JOIN Ubicacion ON Evento.EID = Ubicacion.UBID", null)
+        val cursor = db_reader.rawQuery("SELECT EID, Evento.nombre as Enombre, fecha, descripcion, Evento.foto as Efoto, Facilitador.nombre as Fnombre, Ubicacion.nombre as Unombre FROM Evento LEFT JOIN Facilitador ON Evento.FID = Facilitador.FID LEFT JOIN Ubicacion ON Evento.UBID = Ubicacion.UBID", null)
 
         with(cursor) {
             while (moveToNext()) {

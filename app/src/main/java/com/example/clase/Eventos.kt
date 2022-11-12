@@ -94,7 +94,7 @@ class Eventos(userEmail: String) : Fragment() {
 
         val dataBaseHelper = DataBaseHelper(this.requireContext().applicationContext)
         val db_reader = dataBaseHelper.readableDatabase
-        val cursor = db_reader.rawQuery("SELECT Evento.EID as EID, Evento.nombre as Enombre, fecha, descripcion, Evento.foto as Efoto, Facilitador.nombre as Fnombre, Ubicacion.nombre as Unombre FROM Evento INNER JOIN Facilitador ON Evento.FID = Facilitador.FID INNER JOIN Ubicacion ON Evento.EID = Ubicacion.UBID JOIN UserEvent ON UserEvent.EID = Evento.EID JOIN Usuario ON UserEvent.UID = Usuario.UID WHERE Usuario.email = ?", arrayOf(userEmail))
+        val cursor = db_reader.rawQuery("SELECT Evento.EID as EID, Evento.nombre as Enombre, fecha, descripcion, Evento.foto as Efoto, Facilitador.nombre as Fnombre, Ubicacion.nombre as Unombre FROM Evento LEFT JOIN Facilitador ON Evento.FID = Facilitador.FID LEFT JOIN Ubicacion ON Evento.UBID = Ubicacion.UBID JOIN UserEvent ON UserEvent.EID = Evento.EID JOIN Usuario ON UserEvent.UID = Usuario.UID WHERE Usuario.email = ?", arrayOf(userEmail))
 
         with(cursor) {
             while (moveToNext()) {
