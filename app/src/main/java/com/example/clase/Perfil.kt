@@ -140,7 +140,6 @@ class Perfil : Fragment(){
                         val dataBaseHelper = DataBaseHelper(this.requireContext().applicationContext)
 
                         val db_writer = dataBaseHelper.writableDatabase
-                        // Create a new map of values, where column names are the keys
                         val values = ContentValues().apply {
                             put("email", usAct)
                             put("nombre", usNom)
@@ -151,7 +150,6 @@ class Perfil : Fragment(){
                         Toast.makeText(getActivity(),
                             "Usuario Actualizado correctamente",
                             Toast.LENGTH_SHORT).show();
-                        // Update rows, return the number of updated rows
                         val updatedRows = db_writer.update("Usuario", values, "email LIKE ?",
                             arrayOf(usAct))
                     } else {

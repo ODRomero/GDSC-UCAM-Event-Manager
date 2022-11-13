@@ -33,33 +33,32 @@ class activity_register : AppCompatActivity() {
         val db_writer = dataBaseHelper.writableDatabase
         val db_writer2 = dataBaseHelper.writableDatabase
 
-        // Create a new map of values, where column names are the keys
-        val values = ContentValues().apply {
-            put("email", us)
-            put("password", pass)
-            put("nombre", nom)
-            put("telefono", tel)
-        }
 
-        val selectQuery = "SELECT  * FROM Usuario WHERE email = ?"
-        db_writer2.rawQuery(selectQuery, arrayOf(us)).use { // .use requires API 16
-            if (it.moveToFirst()) {
-                cont++
+        if(us!="" && pass!="" && nom!="" && tel!=""){
 
-
-            }
-            if(cont<1){
-                val view: activity_register =this
-                // Insert the new row, returning the primary key value of the new row
-                val newRowId = db_writer?.insert("Usuario", null, values)
-                Toast.makeText(this,"El usuario se ha guardado correctamente", Toast.LENGTH_LONG).show()
-                irLogin(view)
-            }else{
-                Toast.makeText(this,"Existe un usuario con el mismo email, por favor cambialo", Toast.LENGTH_LONG).show()
+            val values = ContentValues().apply {
+                put("email", us)
+                put("password", pass)
+                put("nombre", nom)
+                put("telefono", tel)
             }
 
-        }
+            val selectQuery = "SELECT  * FROM Usuario WHERE email = ?"
+            db_writer2.rawQuery(selectQuery, arrayOf(us)).use {
+                if (it.moveToFirst()) {
+                    cont++
+                }
+                if(cont<1){
+                    val view: activity_register =this
+                    val newRowId = db_writer?.insert("Usuario", null, values)
+                    Toast.makeText(this,"El usuario se ha guardado correctamente", Toast.LENGTH_LONG).show()
+                    irLogin(view)
+                }else{
+                    Toast.makeText(this,"Existe un usuario con el mismo email, por favor cambialo", Toast.LENGTH_LONG).show()
+                }
 
+            }
+        }
         txtPass?.setText("")
         txtUsu?.setText("")
         txtNombre?.setText("")
@@ -68,10 +67,7 @@ class activity_register : AppCompatActivity() {
     }
     fun irLogin(view: activity_register){
 
-        val login=Intent(this, MainActivity::class.java)//.apply{
-        //putExtra("UserName", us)
-        //putExtra("UserPass", pass)
-        //}
+        val login=Intent(this, MainActivity::class.java)
 
         txtPass?.setText("")
         txtUsu?.setText("")

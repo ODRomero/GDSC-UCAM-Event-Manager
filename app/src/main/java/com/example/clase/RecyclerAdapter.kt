@@ -68,6 +68,7 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
             btDetallesEvento.setOnClickListener(){
                 val detallesEvento = Intent(context, activityDetallesEvento::class.java).apply {
                     putExtra("EID",evento.EID)
+                    putExtra("URL",evento.url)
                 }
 
                 startActivity(context,detallesEvento,null)
@@ -87,10 +88,12 @@ class RecyclerAdapter : RecyclerView.Adapter<RecyclerAdapter.ViewHolder>() {
 
                 try {
                     val newRowId = db_writer?.insert("UserEvent", null, values)
+
                 }catch (e: SQLException){
                     val message:String?="No se pudo añadir userxEvent"
                     println(e.message)
                 }
+                db_writer.close()
 
             }
 

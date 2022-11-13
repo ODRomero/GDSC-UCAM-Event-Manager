@@ -1,14 +1,21 @@
 package com.example.clase
 
 import android.annotation.SuppressLint
+import android.content.ContentValues
+import android.content.Intent
+import android.database.SQLException
+import android.net.Uri
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.squareup.picasso.Picasso
 
 class activityDetallesEvento : AppCompatActivity() {
     var EID : Int?=0
+    var URL : String?=""
     var ivImagenEventoDetalle2 :ImageView?=null
     var ivFacilitador2 :ImageView?=null
     var tvNombreEventoDetalle2 :TextView?=null
@@ -18,6 +25,8 @@ class activityDetallesEvento : AppCompatActivity() {
     var tvFacilitador2:TextView?=null
     var tvBioFacilitador2:TextView?=null
     var tvNombreFacilitador2:TextView?=null
+
+
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,13 +42,25 @@ class activityDetallesEvento : AppCompatActivity() {
         tvBioFacilitador2 = findViewById(R.id.tvBioFacilitador)
         tvNombreFacilitador2 = findViewById(R.id.tvNombreFacilitador)
         ivFacilitador2 = findViewById(R.id.ivFacilitador)
+        var btAsistir:Button = findViewById(R.id.btAsistirEventoDetalle)
+
+
 
         val extras = intent.extras
         if(extras == null) {
             EID= 0;
         } else {
             EID = extras.getInt("EID");
+            URL = extras.getString("URL")
         }
+
+        btAsistir.setOnClickListener() {
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.data = Uri.parse(URL)
+            ContextCompat.startActivity(it.context, intent, null)
+
+        }
+
         fillData()
 
     }

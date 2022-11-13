@@ -36,10 +36,9 @@ class MainActivity : AppCompatActivity() {
         var parametros = arrayOf(pass, us)
         var passAct:String?=""
         var usAct:String?=""
-        var cont:Int=0
-        var idUs:String=""
+        var cont=0
+        var idUs=""
 
-        // Create or Instantiate the database
         if(pass!="" && us!="") {
             val dataBaseHelper = DataBaseHelper(applicationContext)
             val db_reader = dataBaseHelper.readableDatabase
@@ -59,10 +58,7 @@ class MainActivity : AppCompatActivity() {
             }
             cursor.close()
             if (cont >= 1) {
-               /* var pref = getSharedPreferences("Id_Usu", Context.MODE_PRIVATE)
-                var editor = pref.edit()
-                editor.putString("us",idUs)
-                editor.commit()*/
+
                 println(idUs)
                 val home = Intent(this, activity_home_BotNavBar::class.java).apply {
                     putExtra("UserName", us)

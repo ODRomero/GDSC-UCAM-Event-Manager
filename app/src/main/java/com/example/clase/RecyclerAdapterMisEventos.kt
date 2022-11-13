@@ -55,6 +55,8 @@ class RecyclerAdapterMisEventos : RecyclerView.Adapter<RecyclerAdapterMisEventos
             btDetallesEvento.setOnClickListener(){
                 val detallesEvento = Intent(context, activityDetallesEvento::class.java).apply {
                     putExtra("EID",evento.EID)
+                    putExtra("URL",evento.url)
+
                 }
 
                 startActivity(context,detallesEvento,null)
