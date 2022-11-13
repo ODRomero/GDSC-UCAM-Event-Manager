@@ -111,7 +111,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvFechaEventoDetalle" />
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
+                app:shapeAppearanceOverlay="@style/circle"
                 android:id="@+id/ivFacilitador"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
