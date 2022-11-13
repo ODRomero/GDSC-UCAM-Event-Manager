@@ -66,10 +66,6 @@ class Ajustes : Fragment() {
         }*/
         val view: View = inflater.inflate(R.layout.fragment_ajustes, container, false)
 
-
-        //setUpRecyclerView( view.findViewById(R.id.rv) )
-
-
         return view
     }
 

@@ -25,7 +25,7 @@ class activity_home_BotNavBar : AppCompatActivity() {
             when(it.itemId){
                 R.id.inicio -> replaceFragment(Inicio())
                 R.id.buscar -> replaceFragment(buscar())
-                R.id.ajustes -> replaceFragment(Ajustes())
+                R.id.ajustes -> replaceFragment(SettingsFragment())
                 R.id.eventos -> replaceFragment(Eventos(userEmail))
                 R.id.perfil -> replaceFragment(Perfil())
                 else -> {false}
