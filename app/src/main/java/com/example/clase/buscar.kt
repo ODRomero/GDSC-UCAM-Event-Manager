@@ -1,7 +1,6 @@
 package com.example.clase
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,10 +21,11 @@ private const val ARG_PARAM2 = "param2"
  * Use the [buscar.newInstance] factory method to
  * create an instance of this fragment.
  */
-class buscar : Fragment() {
+class buscar(userId: String) : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var userId: String? = userId
 
     lateinit var mRecyclerView : RecyclerView
     private val mAdapter : RecyclerAdapter = RecyclerAdapter()
@@ -62,21 +62,21 @@ class buscar : Fragment() {
          * @return A new instance of fragment buscar.
          */
         // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+       // @JvmStatic
+        /*fun newInstance(param1: String, param2: String) =
             buscar().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
-            }
+            }*/
     }
 
     private fun setUpRecyclerView(rvEventos : RecyclerView){
         mRecyclerView = rvEventos
         mRecyclerView.setHasFixedSize(true)
         mRecyclerView.layoutManager = LinearLayoutManager(view?.context)
-         mAdapter.RecyclerAdapter(getEventos(), requireContext())
+        mAdapter.RecyclerAdapter(getEventos(), requireContext(), userId)
         mRecyclerView.adapter = mAdapter
     }
 

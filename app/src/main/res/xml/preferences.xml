@@ -3,6 +3,7 @@
     <PreferenceCategory android:title="Apariencia">
         <SwitchPreferenceCompat
             android:defaultValue="false"
+            android:id="@+id/btn_change_theme"
             android:key="@string/prefs_switch_ld_mode"
             android:title="@string/cambia_modo" />
     </PreferenceCategory>

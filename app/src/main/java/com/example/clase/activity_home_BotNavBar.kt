@@ -20,11 +20,12 @@ class activity_home_BotNavBar : AppCompatActivity() {
         replaceFragment(Inicio())
 
         var userEmail = intent.getStringExtra("UserName").toString()
+        var userId = intent.getStringExtra("UserId").toString()
 
         binding.bottomNavigationView.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.inicio -> replaceFragment(Inicio())
-                R.id.buscar -> replaceFragment(buscar())
+                R.id.buscar -> replaceFragment(buscar(userId))
                 R.id.ajustes -> replaceFragment(SettingsFragment())
                 R.id.eventos -> replaceFragment(Eventos(userEmail))
                 R.id.perfil -> replaceFragment(Perfil())

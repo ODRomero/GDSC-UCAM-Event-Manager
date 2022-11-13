@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
         var passAct:String?=""
         var usAct:String?=""
         var cont:Int=0
+        var idUs:String=""
 
         // Create or Instantiate the database
         if(pass!="" && us!="") {
@@ -51,15 +52,22 @@ class MainActivity : AppCompatActivity() {
 
                         passAct = getString(getColumnIndex("password"))
                         usAct = getString(getColumnIndex("email"))
+                        idUs = getString(getColumnIndex("UID"))
                         cont++
 
                 }
             }
             cursor.close()
             if (cont >= 1) {
+               /* var pref = getSharedPreferences("Id_Usu", Context.MODE_PRIVATE)
+                var editor = pref.edit()
+                editor.putString("us",idUs)
+                editor.commit()*/
+                println(idUs)
                 val home = Intent(this, activity_home_BotNavBar::class.java).apply {
                     putExtra("UserName", us)
                     putExtra("UserPass", pass)
+                    putExtra("UserId", idUs)
                 }
                 txtPass?.setText("")
                 txtUsu?.setText("")
